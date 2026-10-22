@@ -102,4 +102,4 @@ This project audits **my own codebase** (IdentityGuard). No third-party, product
 
 ---
 
-**Built by Alisha-chaudhary** · Cybersecurity Analyst · CodeAlpha Intern
+**Built by Alisha-chaudhary** · Cybersecurity Analyst
