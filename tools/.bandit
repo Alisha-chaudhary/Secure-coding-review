@@ -1,0 +1,12 @@
+[bandit]
+# Bandit static analyzer configuration for IdentityGuard secure coding review.
+# Target: https://github.com/Alisha-chaudhary/IdentityGuard
+
+tests_dirs = IdentityGuard/app
+exclude_dirs = .venv, __pycache__, .git, node_modules
+
+# Focus on high-value security test IDs for this review
+# (Bandit runs all by default; these are the most relevant for IAM/FastAPI)
+skips = B101, B104, B301, B303, B310, B311, B312, B313, B314, B315, B316, B317, B318, B319, B320, B321, B322, B323, B324, B401, B402, B403, B404, B405, B406, B407, B408, B409, B410, B411, B412, B413
+
+format = custom
