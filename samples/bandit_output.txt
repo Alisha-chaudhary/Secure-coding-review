@@ -1,0 +1,70 @@
+================================================================================
+  Bandit Sample Output - IdentityGuard Secure Coding Review
+================================================================================
+
+Target: IdentityGuard/app/  (FastAPI + SQLAlchemy IAM governance lab)
+Analyzer: bandit (Python static analysis security scanner)
+
+Note: This is a SAMPLE illustrating expected Bandit output format.
+Run `bandit -c tools/.bandit -r IdentityGuard/app/` for live results.
+
+--------------------------------------------------------------------------------
+Results summary
+--------------------------------------------------------------------------------
+Total issues: 12
+  High:   2
+  Medium: 4
+  Low:    6
+
+--------------------------------------------------------------------------------
+High
+--------------------------------------------------------------------------------
+[B310:blacklist] audit_url_open - urllib request
+  Severity: High   Confidence: Medium
+  Location: IdentityGuard/app/pam/service.py:42
+  More info: https://bandit.readthedocs.io/en/latest/plugins/b310_blacklist.html
+
+[B608:hardcoded_sql_expression] Possible SQL injection vector through string-based query construction
+  Severity: High   Confidence: Low
+  Location: IdentityGuard/app/governance/sod.py:88
+  More info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expression.html
+
+--------------------------------------------------------------------------------
+Medium
+--------------------------------------------------------------------------------
+[B108:hardcoded_tmp_directory] Probable use of hardcoded temporary file directory
+  Severity: Medium   Confidence: High
+  Location: IdentityGuard/app/db/seed.py:15
+
+[B324:hashlib_insecure_hash_function] Use of insecure hash function
+  Severity: Medium   Confidence: High
+  Location: IdentityGuard/app/audit/events.py:31
+  (Note: IdentityGuard uses Argon2id for passwords; this refers to non-password hashing)
+
+--------------------------------------------------------------------------------
+Low
+--------------------------------------------------------------------------------
+[B101:assert_used] Use of assert detected
+  Severity: Low   Confidence: High
+  Location: IdentityGuard/app/iam/access_requests.py:...
+
+[B106:hardcoded_password_funcarg] Possible hardcoded password in function argument
+  Severity: Low   Confidence: High
+  Location: IdentityGuard/app/db/seed.py:...
+
+... (truncated for brevity)
+
+--------------------------------------------------------------------------------
+Manual review findings (not detectable by Bandit)
+--------------------------------------------------------------------------------
+SC-01: No rate limiting on /auth/login  (CWE-307, High)
+SC-02: No server-side JWT revocation/denylist (CWE-613, High)
+SC-03: Silent exception swallowing in PAM expiry sweeper (CWE-703, Medium)
+SC-04: Bare except Exception fallback masks policy failures (CWE-703, Medium)
+SC-05: No password history/reuse prevention (CWE-521, Medium)
+SC-06: SQLite without migration framework (CWE-1036, Low)
+SC-07: Detailed user info on /auth/me (CWE-200, Low)
+
+--------------------------------------------------------------------------------
+End of sample output
+================================================================================
